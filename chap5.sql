@@ -112,3 +112,37 @@ INSERT INTO teach_course (pno, cno, dname, term, year) VALUES
 SELECT * from department;
 
 
+-- 성적 정보 테이블 생성 
+CREATE TABLE grade (
+    sno INT,
+    cno INT,
+    pno INT,
+    term INT,
+    year INT,
+    score INT,
+    PRIMARY KEY (sno, cno),
+    FOREIGN KEY (sno) REFERENCES student(sno),
+    FOREIGN KEY (cno) REFERENCES course(cno),
+    FOREIGN KEY (pno) REFERENCES professor(pno)
+);
+
+-- 성적 데이터 삽입 예시
+INSERT INTO grade VALUES (202010101, 7799, 3412, 2, 2020, 95);
+INSERT INTO grade VALUES (201920202, 3311, 2388, 1, 2020, 88);
+INSERT INTO grade VALUES (201940404, 8866, 5109, 1, 2020, 76);
+
+-- 조건 질의: 특정 학생의 성적 조회
+SELECT * FROM grade
+WHERE sno = 202010101;
+
+-- 조건 질의: 특정 교수가 부여한 성적 조회
+SELECT * FROM grade
+WHERE pno = 2388;
+
+-- 조건 질의: 특정 과목의 평균 성적 조회
+SELECT cno, AVG(score) AS avg_score
+FROM grade
+WHERE cno = 7799
+GROUP BY cno;
+
+
